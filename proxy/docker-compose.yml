@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  proxy:
+    image: crmsolucoes/nginx-stable-alpine:latest
+    container_name: reverse_proxy_estudo
+    networks:
+      - app_estudo
+      - app_estudo2
+      - app_estudo3
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/log:/var/log/nginx
+      - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/includes:/etc/nginx/includes/
+
+networks:
+  app_estudo:
+    external:
+      name: app_estudo
+  app_estudo2:
+    external:
+      name: app_estudo2
+  app_estudo3:
+    external:
+      name: app_estudo3
